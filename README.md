@@ -2,6 +2,8 @@
 
 A Windows application that monitors your Clash of Clans activity and warns you before you get disconnected due to inactivity.
 
+![Alert Popup](alert.png)
+
 ## Features
 
 -  **4-minute warning timer** - Alerts you before the 5-minute disconnect

@@ -352,15 +352,19 @@ class RoyalClockGUI:
         popup.configure(bg='black')
         
         try:
-            icon_path = "icon.png"
+            # Handle both regular execution and PyInstaller bundle
+            alert_png_path = "alert.png"
             if getattr(sys, 'frozen', False):
                 # Running as PyInstaller bundle
-                icon_path = os.path.join(sys._MEIPASS, "icon.png")
-            if os.path.exists(icon_path):
-                pil_img = Image.open(icon_path)
+                alert_png_path = os.path.join(sys._MEIPASS, "alert.png")
+            
+            if os.path.exists(alert_png_path):
+                print(f"Loading alert image from: {alert_png_path}")
+                pil_img = Image.open(alert_png_path)
                 img = ImageTk.PhotoImage(pil_img)
                 img_width = img.width()
                 img_height = img.height()
+                print(f"Alert image loaded successfully: {img_width}x{img_height}")
                 
                 screen_width = popup.winfo_screenwidth()
                 screen_height = popup.winfo_screenheight()
@@ -375,6 +379,7 @@ class RoyalClockGUI:
                 
                 popup.attributes('-transparentcolor', 'black')
             else:
+                print(f"Alert image not found at: {alert_png_path}")
                 # Fallback popup
                 popup.geometry("200x50")
                 screen_width = popup.winfo_screenwidth()
@@ -391,11 +396,20 @@ class RoyalClockGUI:
         
         # Play sound
         try:
-            if os.path.exists("alert.mp3"):
-                pygame.mixer.music.load("alert.mp3")
+            # Handle both regular execution and PyInstaller bundle
+            alert_mp3_path = "alert.mp3"
+            if getattr(sys, 'frozen', False):
+                # Running as PyInstaller bundle
+                alert_mp3_path = os.path.join(sys._MEIPASS, "alert.mp3")
+            
+            if os.path.exists(alert_mp3_path):
+                pygame.mixer.music.load(alert_mp3_path)
                 pygame.mixer.music.play()
-        except:
-            pass
+                print(f"Playing alert sound from: {alert_mp3_path}")
+            else:
+                print(f"Alert sound file not found at: {alert_mp3_path}")
+        except Exception as e:
+            print(f"Error playing alert sound: {e}")
         
         # Auto-close after 5 seconds
         popup.after(5000, popup.destroy)
