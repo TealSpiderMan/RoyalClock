@@ -27,7 +27,7 @@ A Windows application that monitors your Clash of Clans activity and warns you b
 ## Requirements
 
 - Windows 10/11
-- Clash of Clans running on your computer
+- Clash of Clans running on your computer (currently only via emulator)
 
 ## Technical Details
 
